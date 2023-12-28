@@ -22,7 +22,7 @@ jobs:
       run: 'gcloud info'
 
     - name: 'Connect through gcloud to database'
-      run: 'gcloud sql connect postgres --user=postgres'
+      run: 'gcloud beta sql connect postgres --user=postgres'
           
   job2:
     name: test
