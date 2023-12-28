@@ -1,3 +1,4 @@
+# prettier-ignore
 name: Continuous Deployment
 
 on:
@@ -10,20 +11,21 @@ jobs:
     name: access-cloud-sql
     runs-on: ubuntu-latest
     steps:
-      - id: 'auth'
-        uses: 'google-github-actions/auth@v2'
-        with:
-          credentials_json: '${{ secrets.GCP_SA_KEY }}'
+    - id: 'auth'
+      uses: 'google-github-actions/auth@v2'
+      with:
+        credentials_json: '${{ secrets.GCP_SA_KEY }}'
 
-      - name: 'Set up Cloud SDK'
-        uses: 'google-github-actions/setup-gcloud@v2'
-
-      - name: 'Connect to VM via gcloud'
-        run: 'gcloud compute ssh --zone "asia-southeast1-b" "instance-1" --project "ace-mile-409403"'
-
- job2:
+    - name: 'Set up Cloud SDK'
+      uses: 'google-github-actions/setup-gcloud@v2'
+    
+    - name: 'run gcloud access'
+      run: 'gcloud compute ssh --zone "asia-southeast1-b" "instance-1" --project "ace-mile-409403"'
+          
+  job2:
     name: deploy
     runs-on: ubuntu-latest
+    needs: job1
 
     steps:
       - name: deploy app
