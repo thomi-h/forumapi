@@ -17,12 +17,6 @@ jobs:
 
     - name: 'Set up Cloud SDK'
       uses: 'google-github-actions/setup-gcloud@v2'
-
-    - name: 'Use gcloud CLI'
-      run: 'gcloud info'
-
-    - name: 'Connect through gcloud to database'
-      run: 'gcloud beta --quiet sql connect postgres --user=postgres'
           
   job2:
     name: test
