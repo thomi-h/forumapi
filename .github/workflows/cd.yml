@@ -18,9 +18,15 @@ jobs:
 
     - name: 'Set up Cloud SDK'
       uses: 'google-github-actions/setup-gcloud@v2'
-    
-    - name: 'deploy app'
-      run: |
+
+    - name: 'SSH and deploy'
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USERNAME }}
+        key: ${{ secrets.SSH_KEY }}
+        port: ${{ secrets.SSH_PORT }}
+        run: |
           cd ~/forumapi
           git pull origin main
           npm install
