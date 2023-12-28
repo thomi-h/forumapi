@@ -6,7 +6,8 @@ on:
       - main
 
 jobs:
-  access-cloud-sql:
+  job1: 
+    name: access-cloud-sql
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -19,8 +20,10 @@ jobs:
           gcloud auth activate-service-account --key-file=${{ secrets.GCP_SA_KEY }}
           gcloud sql connect postgres --user=postgres
           
-  test:
+  job2:
+    name: test
     runs-on: ubuntu-latest
+    needs: job1
 
     strategy:
       matrix:
