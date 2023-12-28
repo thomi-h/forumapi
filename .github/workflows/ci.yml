@@ -21,9 +21,8 @@ jobs:
     - name: 'Use gcloud CLI'
       run: 'gcloud info'
 
-    - name: 'Connect through gcloud'
-      run: |
-          gcloud sql connect postgres --user=postgres
+    - name: 'Connect through gcloud to database'
+      run: 'gcloud sql connect postgres --user=postgres'
           
   job2:
     name: test
