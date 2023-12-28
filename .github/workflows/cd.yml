@@ -6,20 +6,31 @@ on:
       - main
 
 jobs:
-  deploy:
+  job1: 
+    name: access-cloud-sql
+    runs-on: ubuntu-latest
+    steps:
+      - id: 'auth'
+        uses: 'google-github-actions/auth@v2'
+        with:
+          credentials_json: '${{ secrets.GCP_SA_KEY }}'
+
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v2'
+
+      - name: 'Connect to VM via gcloud'
+        run: gcloud compute ssh --zone "asia-southeast1-b" "instance-1" --project "ace-mile-409403" --quiet
+
+
+ job2:
+    name: deploy
     runs-on: ubuntu-latest
 
     steps:
-      - name: SSH and deploy app
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
-          port: ${{ secrets.SSH_PORT }}
-          script: |
-            cd ~/forumapi
-            git pull origin main
-            npm install
-            npm run migrate up
-            pm2 restart auth-api
+      - name: deploy app
+        run: |
+          cd ~/forumapi
+          git pull origin main
+          npm install
+          npm run migrate up
+          pm2 restart forumapi
