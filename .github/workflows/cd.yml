@@ -19,8 +19,7 @@ jobs:
         uses: 'google-github-actions/setup-gcloud@v2'
 
       - name: 'Connect to VM via gcloud'
-        run: gcloud compute ssh --zone "asia-southeast1-b" "instance-1" --project "ace-mile-409403" --quiet
-
+        run: gcloud compute ssh --zone "asia-southeast1-b" "instance-1" --project "ace-mile-409403"
 
  job2:
     name: deploy
