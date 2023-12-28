@@ -11,6 +11,8 @@ jobs:
     name: access-cloud-sql
     runs-on: ubuntu-latest
     steps:
+    - uses: 'actions/checkout@v4'
+
     - id: 'auth'
       uses: 'google-github-actions/auth@v2'
       with:
@@ -19,16 +21,18 @@ jobs:
     - name: 'Set up Cloud SDK'
       uses: 'google-github-actions/setup-gcloud@v2'
 
-    - name: 'SSH and deploy'
-      uses: appleboy/ssh-action@master
+    - id: 'compute-ssh'
+      uses: 'google-github-actions/ssh-compute@v1'
       with:
-        host: ${{ secrets.SSH_HOST }}
-        username: ${{ secrets.SSH_USERNAME }}
-        key: ${{ secrets.SSH_KEY }}
-        port: ${{ secrets.SSH_PORT }}
-        run: |
-          cd ~/forumapi
-          git pull origin main
-          npm install
-          npm run migrate up
-          pm2 restart forumapi
+        instance_name: 'instance-1'
+        zone: 'asia-southeast1-b'
+        ssh_private_key: '${{ secrets.SSH_KEY }}'
+        command: 'echo Hello world'
+    
+    - id: 'deploy-app'
+      run: |
+        cd ~/forumapi
+        git pull origin main
+        npm install
+        npm run migrate up
+        pm2 restart forumapi
