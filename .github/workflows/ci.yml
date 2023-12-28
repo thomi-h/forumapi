@@ -23,7 +23,6 @@ jobs:
 
     - name: 'Connect through gcloud'
       run: |
-          echo ${{ secrets.GCP_SA_KEY }}
           gcloud sql connect postgres --user=postgres
           
   job2:
