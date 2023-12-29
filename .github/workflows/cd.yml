@@ -31,7 +31,7 @@ jobs:
     
     - id: 'deploy-app'
       run: |
-        exec bash \-l
+        exec bash
         whereis pm2
         ls -a
         git pull origin main
