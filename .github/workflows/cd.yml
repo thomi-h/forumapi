@@ -21,20 +21,19 @@ jobs:
     - name: 'Set up Cloud SDK'
       uses: 'google-github-actions/setup-gcloud@v2'
     
-    - id: 'compute-ssh'
-      name: 'SSH and Deploy'
-      uses: 'appleboy/ssh-action@master'
+    - name: 'SSH and Deploy'
+      uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.SSH_HOST }}
         username: ${{ secrets.SSH_USERNAME }}
         key: ${{ secrets.SSH_KEY }}
         port: ${{ secrets.SSH_PORT }}
         script: |
-          cd ~/forumapi
-          git pull origin master
-          npm install
-          npm run migrate up
-          pm2 restart forumapi
+            cd ~/forumapi
+            git pull origin main
+            npm install
+            npm run migrate up
+            pm2 restart forumapi
       env:
         PGHOST_TEST: ${{ secrets.PGHOST_TEST }}
         PGUSER_TEST: ${{ secrets.PGUSER_TEST }}
