@@ -31,7 +31,8 @@ jobs:
     
     - id: 'deploy-app'
       run: |
-        npm i pm2
+        npm i -g pm2
+        source ~/.bashrc
         ls -a
         git pull origin main
         npm install
