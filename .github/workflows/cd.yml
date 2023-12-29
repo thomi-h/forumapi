@@ -22,23 +22,19 @@ jobs:
       uses: 'google-github-actions/setup-gcloud@v2'
     
     - id: 'compute-ssh'
-      uses: 'google-github-actions/ssh-compute@v1'
+      name: 'SSH and Deploy'
+      uses: 'appleboy/ssh-action@master'
       with:
-        instance_name: 'instance-1'
-        zone: 'asia-southeast1-b'
-        ssh_private_key: '${{ secrets.SSH_KEY }}'
-        command: 'echo Hello world'
-    
-    - id: 'deploy-app'
-      run: |
-        npm i -g pm2
-        source ~/.bashrc
-        ls -a
-        git pull origin main
-        npm install
-        npm run migrate up
-        cd src
-        pm2 start app.js
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USERNAME }}
+        key: ${{ secrets.SSH_KEY }}
+        port: ${{ secrets.SSH_PORT }}
+        script: |
+          cd ~/forumapi
+          git pull origin master
+          npm install
+          npm run migrate up
+          pm2 restart forumapi
       env:
         PGHOST_TEST: ${{ secrets.PGHOST_TEST }}
         PGUSER_TEST: ${{ secrets.PGUSER_TEST }}
