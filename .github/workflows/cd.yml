@@ -31,8 +31,8 @@ jobs:
     
     - id: 'deploy-app'
       run: |
-        ls -a
         gcloud compute instances describe 'instance-1' --zone=asia-southeast1-b --quiet
+        ls -a
         git pull origin main
         npm install
         npm run migrate up
