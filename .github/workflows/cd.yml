@@ -21,8 +21,8 @@ jobs:
     - name: 'Set up Cloud SDK'
       uses: 'google-github-actions/setup-gcloud@v2'
     
-    - name: 'SSH and deploy app'
-      uses: appleboy/ssh-action@master
+    - id: 'compute-ssh'
+      uses: 'google-github-actions/ssh-compute@v1'
       with:
         instance_name: 'instance-1'
         zone: 'asia-southeast1-b'
