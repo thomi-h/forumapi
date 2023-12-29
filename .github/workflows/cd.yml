@@ -37,8 +37,8 @@ jobs:
         git pull origin main
         npm install
         npm run migrate up
-        pm2 list
-        pm2 restart "npm run start"
+        cd src
+        pm2 start app.js
       env:
         PGHOST_TEST: ${{ secrets.PGHOST_TEST }}
         PGUSER_TEST: ${{ secrets.PGUSER_TEST }}
