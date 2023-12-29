@@ -32,7 +32,6 @@ jobs:
     - id: 'deploy-app'
       run: |
         ls -a
-        cd forumapi
         git pull origin main
         npm install
         npm run migrate up
