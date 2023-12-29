@@ -24,14 +24,16 @@ jobs:
     - name: 'SSH and deploy app'
       uses: appleboy/ssh-action@master
       with:
-        host: ${{ secrets.SSH_HOST }}
-        username: ${{ secrets.SSH_USERNAME }}
-        key: ${{ secrets.SSH_KEY }}
-        port: ${{ secrets.SSH_PORT }}
-        script: |
-          ls -a
-          cd ~/forumapi
-          git pull origin master
-          npm install
-          npm run migrate up
-          pm2 restart forumapi
+        instance_name: 'instance-1'
+        zone: 'asia-southeast1-b'
+        ssh_private_key: '${{ secrets.SSH_KEY }}'
+        command: 'echo Hello world'
+    
+    - id: 'deploy-app'
+      run: |
+        ls -a
+        gcloud compute instances describe 'instance-1' --zone=asia-southeast1-b --quiet
+        git pull origin main
+        npm install
+        npm run migrate up
+        pm2 restart forumapi
