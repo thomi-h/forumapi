@@ -31,7 +31,9 @@ jobs:
     
     - id: 'deploy-app'
       run: |
-        exec bash
+        export NVM_DIR=~/.nvm
+        source ~/.nvm/nvm.sh
+        npm --help
         whereis pm2
         ls -a
         git pull origin main
