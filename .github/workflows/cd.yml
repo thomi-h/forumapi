@@ -30,10 +30,12 @@ jobs:
         port: ${{ secrets.SSH_PORT }}
         script: |
             cd ~/forumapi
+            ls -a
             git pull origin main
             npm install
             npm run migrate up
-            pm2 restart forumapi
+            pm2 status
+            pm2 restart "npm run start"
       env:
         PGHOST_TEST: ${{ secrets.PGHOST_TEST }}
         PGUSER_TEST: ${{ secrets.PGUSER_TEST }}
